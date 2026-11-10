@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helper4U - Maid & Nanny Service Management Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container navbar">
+            <h1 class="logo">Helper<span>4U</span></h1>
+            <nav class="nav-links">
+                <a href="#home" class="active" onclick="switchView('landing-view')">Home</a>
+                <a href="#marketplace" onclick="switchView('marketplace-view')">Find Helpers</a>
+                <a href="#admin" onclick="switchView('admin-view')">Admin Dashboard</a>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-secondary" onclick="alert('Sign In system active in Phase 2!')">Sign In</button>
+                <button class="btn btn-primary" onclick="alert('Registration active in Phase 2!')">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+
+        <!-- 1. LANDING/HERO VIEW -->
+        <section id="landing-view" class="view-section">
+            <div class="hero-content">
+                <h2>Verified, Professional Domestic Help for Your Household</h2>
+                <p>Connect with trusted maids, babysitters, and nannies on flexible hourly, monthly, or yearly service plans.</p>
+                <button class="btn btn-large btn-primary" onclick="switchView('marketplace-view')">Browse Available Helpers</button>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🛡️ Background Verified</h3>
+                    <p>Every helper undergoes rigorous identity and background checks for your complete peace of mind.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⏳ Flexible Plans</h3>
+                    <p>Choose exactly what fits your home schedule: hourly tasks, monthly help, or long-term yearly contracts.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⭐ Rated & Reviewed</h3>
+                    <p>Transparent evaluation matrices backed by authentic performance ratings from verified households.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. MARKETPLACE VIEW (Search, Filter & Browse) -->
+        <section id="marketplace-view" class="view-section hidden">
+            <h2 class="section-title">Find Your Ideal Domestic Helper</h2>
+            
+            <!-- Filters Sidebar & Search Bar Combo -->
+            <div class="marketplace-container">
+                <aside class="filters-sidebar">
+                    <h3>Filter Options</h3>
+                    
+                    <div class="filter-group">
+                        <label for="search-input">Search Profile Name</label>
+                        <input type="text" id="search-input" placeholder="e.g. Maria...">
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="type-filter">Service Type</label>
+                        <select id="type-filter">
+                            <option value="all">All Services</option>
+                            <option value="Maid">Maid</option>
+                            <option value="Babysitter">Babysitter</option>
+                            <option value="Nanny">Nanny</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="plan-filter">Preferred Service Plan</label>
+                        <select id="plan-filter">
+                            <option value="all">All Plans</option>
+                            <option value="Hourly">Hourly</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Yearly">Yearly</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary w-100" onclick="applyFilters()">Apply Selection</button>
+                    <button class="btn btn-secondary w-100 mt-10" onclick="resetFilters()">Clear Filters</button>
+                </aside>
+
+                <!-- Dynamic Helper Grid -->
+                <div class="helper-grid-wrapper">
+                    <div id="helper-grid" class="helper-grid">
+                        <!-- JS injects helper cards here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. BOOKING WORKFLOW MODULE -->
+        <section id="booking-view" class="view-section hidden">
+            <div class="booking-card">
+                <h2>Complete Your Booking Subscription</h2>
+                <div id="booking-details-summary">
+                    <!-- JS injects details here dynamically -->
+                </div>
+                <hr>
+                <form id="booking-form" onsubmit="executeBooking(event)">
+                    <div class="form-group">
+                        <label for="start-date">Desired Service Start Date</label>
+                        <input type="date" id="start-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="household-notes">Specific Requests / Household Instructions</label>
+                        <textarea id="household-notes" rows="4" placeholder="Mention specific preferences, chores, or allergies..."></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="switchView('marketplace-view')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Secure Booking Request</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- 4. ADMIN DASHBOARD & METRICS PANELS -->
+        <section id="admin-view" class="view-section hidden">
+            <h2 class="section-title">Platform Operations Analytics</h2>
+            
+            <!-- Strategic Performance KPIs -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h4>Total Household Accounts</h4>
+                    <p class="kpi-metric" id="kpi-households">1,248</p>
+                </div>
+                <div class="kpi-card">
+                    <h4>Verified Operational Helpers</h4>
+                    <p class="kpi-metric" id="kpi-helpers">0</p>
+                </div>
+                <div class="kpi-card">
+                    <h4>Active Platform Subscriptions</h4>
+                    <p class="kpi-metric" id="kpi-bookings">0</p>
+                </div>
+                <div class="kpi-card">
+                    <h4>Global Fulfillment Rate</h4>
+                    <p class="kpi-metric">94.2%</p>
+                </div>
+            </div>
+
+            <!-- Operations Data Panels -->
+            <div class="admin-panels">
+                <div class="panel-box">
+                    <h3>System Live Booking Stream</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Helper Target</th>
+                                    <th>Plan Chosen</th>
+                                    <th>Start Date</th>
+                                    <th>Operational Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-bookings-table">
+                                <!-- JS dynamic population -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Interface Footer -->
+    <footer class="main-footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Helper4U Inc. Web Architecture System Framework MVP (Phase 1 Build Deployment Ready).</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
